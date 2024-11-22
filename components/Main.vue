@@ -127,7 +127,7 @@ const removeLink = (index: number) => {
 
 <template>
   <div class="app-container" :style="{ backgroundImage: backgroundStyle }">
-    <h1 v-if="bgInfo?.title" class="main-title">
+    <h1 class="main-title">
       {{ bgInfo.title }}
     </h1>
     <form @submit.prevent="performSearch" class="search-form">

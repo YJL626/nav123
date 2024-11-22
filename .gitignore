@@ -5,10 +5,10 @@
 .nitro
 .cache
 dist
-
+start*.sh
 # Node dependencies
 node_modules
-
+package-lock.json
 # Logs
 logs
 *.log
