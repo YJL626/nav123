@@ -1,6 +1,22 @@
-# Nuxt Minimal Starter
+![Alt Text](assets/preview.jpg)
+<div align="center">
+<p> It's a personal project. Now it's simple, but I use it every day, so it will be perfect in the future, and PRs are welcome.
+</p>
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+</div>
+
+## todo
+
+- server cache image url，base image url
+- get knowledge from o1
+- get dynamic info from llm
+- manual refresh background image
+- search engine
+- pwa
+- The main information data should be stored in the database.
+- deploy to github page
+- support query params, and can use custom prompt search
+- account system
 
 ## Setup
 
