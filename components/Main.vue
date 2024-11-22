@@ -244,9 +244,7 @@ const saveEdit = () => {
             </div>
           </li>
         </ul>
-        <button @click="closeSettings" class="close-button">
-          <span>Close</span>
-        </button>
+        <button @click="closeSettings" class="close-button">Close</button>
       </div>
     </div>
 
@@ -439,32 +437,31 @@ const saveEdit = () => {
 }
 .reorder-buttons {
   display: grid;
-  grid-template: 1fr / repeat(4, 1fr);
-  gap: 0 0.2rem;
+  grid-template-columns: repeat(4, 1fr);
 }
 .reorder-buttons button {
   width: 2rem;
   height: 2rem;
+  margin-left: 5px;
+  font-size: 1rem;
 }
+
 .close-button {
-  margin-top: 20px;
-  padding: 10px 24px;
-  background-color: #3498db;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #e74c3c;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: block;
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
 }
 
 .close-button:hover {
-  background-color: #2980b9;
+  background-color: #c0392b;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -472,33 +469,6 @@ const saveEdit = () => {
 .close-button:active {
   transform: translateY(1px);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.close-button span {
-  position: relative;
-  z-index: 1;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-.close-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: 0.5s;
-}
-
-.close-button:hover::before {
-  left: 100%;
 }
 
 .edit-dialog {

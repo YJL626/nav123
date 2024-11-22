@@ -20,19 +20,27 @@
           <input v-model="newNavItem.url" required />
           <label>URL</label>
         </div>
-        <div class="form-group">
-          <input v-model="newNavItem.image" :disabled="useDefaultIcon" />
+        <div class="form-group" style="display: flex; align-items: center">
+          <input v-model="newNavItem.image" />
           <label>Image URL (optional)</label>
+          <button
+            type="button"
+            class="get-default-button"
+            @click="setDefaultIcon"
+          >
+            <span class="icon">🎨</span>
+            <span class="text">{{ iconText }}</span>
+          </button>
         </div>
-        <div class="checkbox-group">
-          <input
-            type="checkbox"
-            id="useDefaultIcon"
-            v-model="useDefaultIcon"
-            @change="handleDefaultIconChange"
-          />
-          <label for="useDefaultIcon">Use website default icon</label>
-        </div>
+        <!-- <button
+          type="button"
+          class="get-default-button"
+          @click="newNavItem.image = getFavicon(newNavItem.value?.url)"
+          :disabled="!newNavItem.url"
+        >
+          <span class="icon">🎨</span>
+          <span class="text">Get Default</span>
+        </button> -->
         <div class="form-actions">
           <button type="submit" class="btn-submit">Add</button>
           <button type="button" @click="cancelAdd" class="btn-cancel">
@@ -65,7 +73,7 @@ function handleAdd() {
 
 function addNavItem() {
   if (useDefaultIcon.value) {
-    newNavItem.value.image = getFavicon(newNavItem.value.url); // Clear the image URL when using default icon
+    newNavItem.value.image = getFavicon(newNavItem.value.url) || ""; // Clear the image URL when using default icon
   }
   navLinks.value.push({ ...newNavItem.value });
   newNavItem.value = { url: "", image: "", label: "" };
@@ -76,8 +84,18 @@ function cancelAdd() {
   newNavItem.value = { url: "", image: "", label: "" };
   isAddDialogOpen.value = false;
 }
-
-function handleDefaultIconChange() {}
+const defaultIconText = `Get Default`;
+const iconText = ref(`Get Default`);
+const setDefaultIcon = () => {
+  try {
+    newNavItem.value.image = getFavicon(newNavItem.value.url);
+  } catch (error) {
+    iconText.value = `Please enter a valid URL`;
+    setTimeout(() => {
+      iconText.value = defaultIconText;
+    }, 3000);
+  }
+};
 </script>
 
 <style scoped>
@@ -225,7 +243,7 @@ function handleDefaultIconChange() {}
 .checkbox-group {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -238,5 +256,35 @@ function handleDefaultIconChange() {}
   position: static;
   color: #333;
   font-size: 14px;
+}
+
+.get-default-button {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.get-default-button:hover:not(:disabled) {
+  background-color: #e4e4e4;
+}
+
+.get-default-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.get-default-button .icon {
+  font-size: 1.1em;
+}
+
+.get-default-button .text {
+  font-size: 0.9em;
 }
 </style>
