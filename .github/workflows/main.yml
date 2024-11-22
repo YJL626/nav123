@@ -1,0 +1,24 @@
+name: Deploy via SSH
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  ssh-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Execute Remote Script
+        run: |
+          ssh root@$SSH_AUTH_IP 'bash /path/to/remote-script.sh'
+        env:
+          SSH_AUTH_IP: ${{ secrets.SSH_AUTH_IP }}
