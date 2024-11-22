@@ -21,8 +21,17 @@
           <label>URL</label>
         </div>
         <div class="form-group">
-          <input v-model="newNavItem.image" />
+          <input v-model="newNavItem.image" :disabled="useDefaultIcon" />
           <label>Image URL (optional)</label>
+        </div>
+        <div class="checkbox-group">
+          <input
+            type="checkbox"
+            id="useDefaultIcon"
+            v-model="useDefaultIcon"
+            @change="handleDefaultIconChange"
+          />
+          <label for="useDefaultIcon">Use website default icon</label>
         </div>
         <div class="form-actions">
           <button type="submit" class="btn-submit">Add</button>
@@ -48,12 +57,16 @@ const newNavItem = ref({
   image: "",
   label: "",
 });
+const useDefaultIcon = ref(false);
 
 function handleAdd() {
   isAddDialogOpen.value = true;
 }
 
 function addNavItem() {
+  if (useDefaultIcon.value) {
+    newNavItem.value.image = getFavicon(newNavItem.value.url); // Clear the image URL when using default icon
+  }
   navLinks.value.push({ ...newNavItem.value });
   newNavItem.value = { url: "", image: "", label: "" };
   isAddDialogOpen.value = false;
@@ -63,6 +76,8 @@ function cancelAdd() {
   newNavItem.value = { url: "", image: "", label: "" };
   isAddDialogOpen.value = false;
 }
+
+function handleDefaultIconChange() {}
 </script>
 
 <style scoped>
@@ -205,5 +220,23 @@ function cancelAdd() {
 
 .btn-cancel:hover {
   background-color: #f0f0f0;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.checkbox-group label {
+  position: static;
+  color: #333;
+  font-size: 14px;
 }
 </style>

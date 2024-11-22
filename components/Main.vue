@@ -123,6 +123,39 @@ const removeLink = (index: number) => {
   links.splice(index, 1);
   navLinks.value = links;
 };
+
+// Add these refs for edit dialog
+const editDialogOpen = ref(false);
+const editingLink = ref<{
+  index: number;
+  label: string;
+  url: string;
+  image: string;
+} | null>(null);
+
+// Update the editLink method
+const editLink = (index: number) => {
+  const link = navLinks.value[index];
+  editingLink.value = {
+    index,
+    label: link.label,
+    url: link.url,
+    image: link.image || "",
+  };
+  editDialogOpen.value = true;
+};
+
+// Add this method to save edits
+const saveEdit = () => {
+  if (editingLink.value) {
+    const { index, label, url, image } = editingLink.value;
+    const links = [...navLinks.value];
+    links[index] = { ...links[index], label, url, image };
+    navLinks.value = links;
+    editDialogOpen.value = false;
+    editingLink.value = null;
+  }
+};
 </script>
 
 <template>
@@ -206,11 +239,41 @@ const removeLink = (index: number) => {
               >
                 ↓
               </button>
+              <button @click="editLink(index)">✎</button>
               <button @click="removeLink(index)">✖</button>
             </div>
           </li>
         </ul>
-        <button @click="closeSettings" class="close-button">Close</button>
+        <button @click="closeSettings" class="close-button">
+          <span>Close</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Edit Dialog -->
+    <div v-if="editDialogOpen" class="edit-dialog">
+      <div class="edit-dialog-content">
+        <h3>Edit Link</h3>
+        <div class="edit-form">
+          <div class="form-group">
+            <label>Label:</label>
+            <input v-model="editingLink.label" type="text" class="edit-input" />
+          </div>
+          <div class="form-group">
+            <label>URL:</label>
+            <input v-model="editingLink.url" type="text" class="edit-input" />
+          </div>
+          <div class="form-group">
+            <label>Image URL:</label>
+            <input v-model="editingLink.image" type="text" class="edit-input" />
+          </div>
+          <div class="edit-buttons">
+            <button @click="saveEdit" class="save-button">Save</button>
+            <button @click="editDialogOpen = false" class="cancel-button">
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -374,26 +437,140 @@ const removeLink = (index: number) => {
 .nav-links-list li span {
   flex-grow: 1;
 }
-
+.reorder-buttons {
+  display: grid;
+  grid-template: 1fr / repeat(4, 1fr);
+  gap: 0 0.2rem;
+}
 .reorder-buttons button {
-  margin-left: 5px;
-  padding: 5px 10px;
+  width: 2rem;
+  height: 2rem;
+}
+.close-button {
+  margin-top: 20px;
+  padding: 10px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.close-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.close-button span {
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.close-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.close-button:hover::before {
+  left: 100%;
+}
+
+.edit-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.edit-dialog-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.edit-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 1rem;
 }
 
-.close-button {
-  display: block;
-  margin: 20px auto 0;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #e74c3c;
-  color: white;
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.save-button,
+.cancel-button {
+  padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.close-button:hover {
-  background-color: #c0392b;
+.save-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #2980b9;
+}
+
+.cancel-button:hover {
+  background-color: #7f8c8d;
 }
 </style>
