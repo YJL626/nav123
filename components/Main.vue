@@ -2,6 +2,7 @@
 import { onMounted, ref, computed, onBeforeMount, toRef } from "vue";
 import NavLinks from "./NavLinks.vue";
 import { BG_ID_KEY, getBingWallpaper } from "../utils/getWrapaper";
+import { useHead } from '#imports';
 
 // Import getSearchUrl function
 import { getSearchUrl, searchEngineUrls } from "../utils/getSearchUrl"; // Adjust the path as necessary
@@ -9,6 +10,15 @@ import { useLocalStorage } from "@vueuse/core";
 import { navLinks } from "../data/navLinks";
 import { getLatestBingWallpaper } from "../server/getLatestBingWallpaper";
 // Extracted constant for the background ID key
+const t = "Nav123"
+useHead({
+      title: `${t} - Your Navigation Website`,
+      meta: [
+        { name: 'description', content: `Explore curated links and resources for ${t}.` },
+        { property: 'og:title', content: `${t} - Your Navigation Website` },
+        { property: 'og:description', content: `Curated resources and links for ${t}.` },
+      ],
+    });
 const dateKey = ~~(Date.now() / 1000 / 60 / 60 / 24);
 const localBgKey = useCookie("localBgKey", {
   default: () => ({ date: dateKey, index: 0 }),
