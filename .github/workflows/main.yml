@@ -19,6 +19,6 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Execute Remote Script
         run: |
-          ssh root@$SSH_AUTH_IP 'bash 'cd /root/rep/nav123 && git pull && bash ./start.sh'
+          ssh root@$SSH_AUTH_IP 'cd /root/rep/nav123 && git pull && bash ./start.sh'
         env:
           SSH_AUTH_IP: ${{ secrets.SSH_AUTH_IP }}
