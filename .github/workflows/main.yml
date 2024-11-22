@@ -17,6 +17,11 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            # Optionally, add the server's SSH key to known_hosts to prevent host key verification prompts
+      - name: Add server to known_hosts
+        run: ssh-keyscan -H $SSH_AUTH_IP >> ~/.ssh/known_hosts
+        env:
+          SSH_AUTH_IP: ${{ secrets.SSH_AUTH_IP }}
       - name: Execute Remote Script
         run: |
           ssh root@$SSH_AUTH_IP 'cd /root/rep/nav123 && git pull && bash ./start.sh'
