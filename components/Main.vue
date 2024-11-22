@@ -156,6 +156,18 @@ const saveEdit = () => {
     editingLink.value = null;
   }
 };
+const defaultIconText = `Get Default`;
+const iconText = ref(`Get Default`);
+const setDefaultIcon = () => {
+  try {
+    editingLink.value.image = getFavicon(editingLink.value.url);
+  } catch (error) {
+    iconText.value = `Please enter a valid URL`;
+    setTimeout(() => {
+      iconText.value = defaultIconText;
+    }, 3000);
+  }
+};
 </script>
 
 <template>
@@ -263,7 +275,27 @@ const saveEdit = () => {
           </div>
           <div class="form-group">
             <label>Image URL:</label>
-            <input v-model="editingLink.image" type="text" class="edit-input" />
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 7rem;
+                gap: 0.2rem;
+              "
+            >
+              <input
+                v-model="editingLink.image"
+                type="text"
+                class="edit-input"
+              />
+              <button
+                type="button"
+                class="get-default-button"
+                @click="setDefaultIcon"
+              >
+                <span class="icon">🎨</span>
+                <span class="text">{{ iconText }}</span>
+              </button>
+            </div>
           </div>
           <div class="edit-buttons">
             <button @click="saveEdit" class="save-button">Save</button>
