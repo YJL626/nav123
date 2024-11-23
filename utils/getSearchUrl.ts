@@ -6,7 +6,7 @@ export const searchEngineUrls = {
     image: "https://www.google.com/search?q=%s&tbm=isch",
   },
   bing: {
-    name: "Bing", 
+    name: "Bing",
     type: "normal",
     search: "https://www.bing.com/search?q=%s",
     image: "https://www.bing.com/images/search?q=%s",
@@ -16,15 +16,21 @@ export const searchEngineUrls = {
     type: "ai",
     search: "https://chatgpt.com/?q=%s&hints=search&ref=ext",
   },
+  "o1-mini": {
+    name: "Grammar Fixer",
+    type: "agent",
+    search: "https://chatgpt.com/?q=%s&model=o1-mini",
+  },
   "grammar fixer": {
     name: "Grammar Fixer",
     type: "agent",
     search: "https://chatgpt.com/?q=fix grammar error ```content %s```",
   },
   "sentence explainer": {
-    name: "Sentence Explainer", 
+    name: "Sentence Explainer",
     type: "agent",
-    search: "https://chatgpt.com/?q=Next, explain the English sentence's sentence structure, grammar, and vocabulary/phrases in depth. The response should be in simplified Chinese, using plain text to directly explain all content. The English output and sentence structure sections should include IPA phonetic symbols.```sentence %s```&model=o1-mini",
+    search:
+      "https://chatgpt.com/?q=Next, explain the English sentence's sentence structure, grammar, and vocabulary/phrases in depth. The response should be in simplified Chinese, using plain text to directly explain all content. The English output and sentence structure sections should include IPA phonetic symbols.```sentence %s```&model=o1-mini",
   },
   perplexity: {
     name: "Perplexity AI",
@@ -34,7 +40,7 @@ export const searchEngineUrls = {
   doubao: {
     name: "秘塔AI",
     area: "cn",
-    type: "ai", 
+    type: "ai",
     search: "https://metaso.cn/?q=%s",
   },
 } as const;
