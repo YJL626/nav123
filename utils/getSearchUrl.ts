@@ -17,7 +17,7 @@ export const searchEngineUrls = {
     search: "https://chatgpt.com/?q=%s&hints=search&ref=ext",
   },
   "o1-mini": {
-    name: "Grammar Fixer",
+    name: "o1-mini",
     type: "agent",
     search: "https://chatgpt.com/?q=%s&model=o1-mini",
   },
