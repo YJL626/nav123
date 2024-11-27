@@ -1,24 +1,24 @@
-![Alt Text](assets/preview.jpg)
+![Alt Text](assets/preview.jpg) 
 <div align="center">
-<p> It's a personal project. Now it's simple, but I use it every day, so it will be perfect in the future, and PRs are welcome.
+<p> It's a personal project. Now it's simple, but I use it every day, so it will be perfect in the future, and PRs are welcome. 💪✨
 </p>
 
 </div>
 
-## todo
+ 📋
 
-- server cache image url，base image url
-- get knowledge from o1
-- get dynamic info from llm
-- manual refresh background image
-- search engine
-- pwa
-- The main information data should be stored in the database.
-- deploy to github page
-- support query params, and can use custom prompt search
-- account system
+- server cache image url, base image url 🖼️
+- get knowledge from o1 📚
+- get dynamic info from llm 🤖
+- manual refresh background image 🔄
+- search engine 🔍
+- pwa 📱
+- The main information data should be stored in the database. 💾
+- deploy to GitHub Pages 🚀
+- support query params, and can use custom prompt search 🔧
+- account system 🔑
 
-## Setup
+## Setup ⚙️
 
 Make sure to install dependencies:
 
@@ -36,7 +36,7 @@ yarn install
 bun install
 ```
 
-## Development Server
+## Development Server 🖥️
 
 Start the development server on `http://localhost:3000`:
 
@@ -54,7 +54,7 @@ yarn dev
 bun run dev
 ```
 
-## Production
+## Production 📦
 
 Build the application for production:
 
@@ -72,7 +72,7 @@ yarn build
 bun run build
 ```
 
-Locally preview production build:
+Locally preview production build: 👀
 
 ```bash
 # npm
@@ -87,5 +87,3 @@ yarn preview
 # bun
 bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
